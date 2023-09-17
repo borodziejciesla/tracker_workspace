@@ -15,13 +15,13 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-find_package(messages REQUIRED)
+find_package(tracker_msgs REQUIRED)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 add_executable(tracker_wrapper src/tracker_wrapper.cpp)
-ament_target_dependencies(tracker_wrapper rclcpp std_msgs messages)
+ament_target_dependencies(tracker_wrapper rclcpp std_msgs tracker_msgs)
 
 install(TARGETS
   tracker_wrapper

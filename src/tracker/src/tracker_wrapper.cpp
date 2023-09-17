@@ -6,7 +6,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-#include "messages/msg/tracker_scan.hpp"
+#include "tracker_msgs/msg/tracker_scan.hpp"
 
 using namespace std::chrono_literals;
 
@@ -23,7 +23,7 @@ class MinimalPublisher : public rclcpp::Node
       timer_ = this->create_wall_timer(
         500ms, std::bind(&MinimalPublisher::timer_callback, this));
 
-      tracker_spublisher_ = this->create_publisher<messages::msg::TrackerScan>("tracker_scan", 10);
+      tracker_spublisher_ = this->create_publisher<tracker_msgs::msg::TrackerScan>("tracker_scan", 10);
     }
 
   private:
@@ -38,9 +38,9 @@ class MinimalPublisher : public rclcpp::Node
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-    rclcpp::Publisher<messages::msg::TrackerScan>::SharedPtr tracker_spublisher_;
+    rclcpp::Publisher<tracker_msgs::msg::TrackerScan>::SharedPtr tracker_spublisher_;
     size_t count_;
-    messages::msg::TrackerScan tracker_scan_;
+    tracker_msgs::msg::TrackerScan tracker_scan_;
 };
 
 int main(int argc, char * argv[])

@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.8)
 project(visualization)
 
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 20)
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -11,7 +15,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-find_package(messages REQUIRED)
+find_package(tracker_msgs REQUIRED)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -19,7 +23,7 @@ find_package(messages REQUIRED)
 
 
 add_executable(tracker_visualization src/tracker_visualization.cpp)
-ament_target_dependencies(tracker_visualization rclcpp std_msgs messages)
+ament_target_dependencies(tracker_visualization rclcpp std_msgs tracker_msgs)
 
 install(TARGETS
   tracker_visualization
