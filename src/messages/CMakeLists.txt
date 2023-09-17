@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(tracker)
-
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 20)
-endif()
+project(messages)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -12,20 +8,23 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-
-find_package(messages REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-add_executable(tracker_wrapper src/tracker_wrapper.cpp)
-ament_target_dependencies(tracker_wrapper rclcpp std_msgs messages)
 
-install(TARGETS
-  tracker_wrapper
-  DESTINATION lib/${PROJECT_NAME})
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Covariance.msg"
+  "msg/Object.msg"
+  "msg/Pose.msg"
+  "msg/Shape.msg"
+  "msg/TrackerScan.msg"
+  "msg/Velocity.msg"
+  DEPENDENCIES geometry_msgs # Add packages that above messages depend on, in this case geometry_msgs for Sphere.msg
+)
 
 
 if(BUILD_TESTING)

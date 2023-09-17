@@ -4,6 +4,8 @@
 #include "std_msgs/msg/string.hpp"
 using std::placeholders::_1;
 
+#include "messages/msg/tracker_scan.hpp"
+
 class MinimalSubscriber : public rclcpp::Node
 {
   public:
