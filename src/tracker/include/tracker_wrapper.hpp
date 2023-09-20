@@ -12,7 +12,11 @@ namespace tracker_wrapper {
       TrackerWrapper(void);
 
     private:
-      rclcpp::Publisher<tracker_msgs::msg::TrackerScan>::SharedPtr tracker_spublisher_;
+      void RadarSubscriberCallback(const radar_msgs::msg::RadarScan & radar_msg);
+
+      rclcpp::Subscription<radar_msgs::msg::RadarScan>::SharedPtr radar_subscriber_;
+
+      rclcpp::Publisher<tracker_msgs::msg::TrackerScan>::SharedPtr tracker_publisher_;
       tracker_msgs::msg::TrackerScan tracker_scan_;
   };
 } // namespace tracker_wrapper
