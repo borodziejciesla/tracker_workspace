@@ -21,11 +21,18 @@ find_package(tracker_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-
-add_executable(tracker_visualization src/tracker_visualization.cpp)
+add_executable(tracker_visualization
+  src/tracker_visualization.cpp
+)
 ament_target_dependencies(tracker_visualization rclcpp std_msgs tracker_msgs)
 
+add_executable(radar_visualization
+  src/radar_visualization.cpp
+)
+ament_target_dependencies(radar_visualization rclcpp std_msgs tracker_msgs)
+
 install(TARGETS
+  radar_visualization
   tracker_visualization
   DESTINATION lib/${PROJECT_NAME})
 
