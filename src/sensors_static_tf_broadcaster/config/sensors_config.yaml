@@ -1,0 +1,60 @@
+sensors_static_tf_broadcaster:
+  ros__parameters:
+    radars:
+      radar_front:
+        id: 1         # [-]
+        x: 3.7        # [m]
+        y: 0.0        # [m]
+        z: 0.2        # [m]
+        roll: 0.0     # [deg]
+        pitch: 0.0    # [deg]
+        yaw: 0.0      # [deg]
+      radar_rear:
+        id: 6         # [-]
+        x: -1.0       # [m]
+        y: 0.0        # [m]
+        z: 0.2        # [m]
+        roll: 0.0     # [deg]
+        pitch: 0.0    # [deg]
+        yaw: -180.0   # [deg]
+      radar_fl:
+        id: 2         # [-]
+        x: 2.8        # [m]
+        y: 0.9        # [m]
+        z: 0.2        # [m]
+        roll: 0.0     # [deg]
+        pitch: 0.0    # [deg]
+        yaw: 45.0     # [deg]
+      radar_fr:
+        id: 3         # [-]
+        x: 2.8        # [m]
+        y: -0.9       # [m]
+        z: 0.2        # [m]
+        roll: 0.0     # [deg]
+        pitch: 0.0    # [deg]
+        yaw: -45.0    # [deg]
+      radar_rl:
+        id: 4         # [-]
+        x: 0.0        # [m]
+        y: 0.9        # [m]
+        z: 0.2        # [m]
+        roll: 0.0     # [deg]
+        pitch: 0.0    # [deg]
+        yaw: 135.0    # [deg]
+      radar_rr:
+        id: 5         # [-]
+        x: 0.0        # [m]
+        y: -0.9       # [m]
+        z: 0.2        # [m]
+        roll: 0.0     # [deg]
+        pitch: 0.0    # [deg]
+        yaw: -135.0   # [deg]
+    lidars:
+      lidar_top:
+        id: 1         # [-]
+        x: 0.95       # [m]
+        y: 0.0        # [m]
+        z: 1.6        # [m]
+        roll: 0.0     # [deg]
+        pitch: 0.0    # [deg]
+        yaw: 0.0      # [deg]
