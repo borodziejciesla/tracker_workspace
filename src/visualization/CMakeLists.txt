@@ -16,6 +16,8 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
 find_package(tracker_msgs REQUIRED)
+find_package(radar_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -26,10 +28,22 @@ add_executable(tracker_visualization
 )
 ament_target_dependencies(tracker_visualization rclcpp std_msgs tracker_msgs)
 
+
+
 add_executable(radar_visualization
-  src/radar_visualization.cpp
+  src/radar_visualization_node.cpp
+  src/radar_visualizer.cpp
 )
-ament_target_dependencies(radar_visualization rclcpp std_msgs tracker_msgs)
+target_include_directories(radar_visualization
+  PRIVATE
+    include
+)
+ament_target_dependencies(radar_visualization
+  rclcpp
+  std_msgs
+  radar_msgs
+  visualization_msgs
+)
 
 install(TARGETS
   radar_visualization
