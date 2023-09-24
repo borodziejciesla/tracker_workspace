@@ -5,18 +5,17 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     config = os.path.join(
-        get_package_share_directory('bag_file_createor'),
+        get_package_share_directory('sensors_static_tf_broadcaster'),
         'config',
-        'sensor_config.yaml'
+        'sensors_config.yaml'
         )
     
     return LaunchDescription([
         Node(
-            package='bag_file_createor',
-            namespace='bag_file_createor',
-            executable='bag_file_createor',
-            parameters = [config],
-            name='bag_file_createor'
+            package = 'sensors_static_tf_broadcaster',
+            name = 'sensors_static_tf_broadcaster',
+            executable = 'sensors_static_tf_broadcaster_node'
+            #parameters = [config]
         ),
         Node(
             package='radar_preprocessor',
@@ -41,5 +40,12 @@ def generate_launch_description():
             namespace='visualization',
             executable='tracker_visualization',
             name='tracker_visualization'
+        ),
+         Node(
+            package='rviz2',
+            namespace='',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d' + os.path.join(get_package_share_directory('config'), 'config', 'rviz_config.rviz')]
         )
     ])
