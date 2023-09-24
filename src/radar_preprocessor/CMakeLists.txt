@@ -20,16 +20,36 @@ find_package(radar_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+add_subdirectory(include/radar_perception)
+
 add_executable(radar_preprocessor_wrapper
   src/radar_preprocessor_node.cpp
   src/radar_preprocessor_wrapper.cpp
-)
 
-add_subdirectory(include/radar_perception)
+  $<TARGET_OBJECTS:radar_perception>
+  $<TARGET_OBJECTS:dealiaser>
+  $<TARGET_OBJECTS:detection_classifier>
+  $<TARGET_OBJECTS:segmentator>
+  $<TARGET_OBJECTS:segment_processor>
+  $<TARGET_OBJECTS:velocity_estimator>
+)
 
 target_include_directories(radar_preprocessor_wrapper
   PRIVATE
     include
+    include/radar_perception/include
+    include/radar_perception/include/radar_io/include
+
+    $<TARGET_PROPERTY:radar_perception,INTERFACE_INCLUDE_DIRECTORIES>
+)
+
+target_link_libraries(radar_preprocessor_wrapper
+  radar_perception
+  dealiaser
+  detection_classifier
+  segmentator
+  segment_processor
+  velocity_estimator
 )
 
 ament_target_dependencies(radar_preprocessor_wrapper
