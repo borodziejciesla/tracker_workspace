@@ -20,8 +20,23 @@ find_package(radar_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-add_executable(radar_preprocessor_wrapper src/radar_preprocessor_node.cpp)
-ament_target_dependencies(radar_preprocessor_wrapper rclcpp std_msgs radar_msgs)
+add_executable(radar_preprocessor_wrapper
+  src/radar_preprocessor_node.cpp
+  src/radar_preprocessor_wrapper.cpp
+)
+
+add_subdirectory(include/radar_perception)
+
+target_include_directories(radar_preprocessor_wrapper
+  PRIVATE
+    include
+)
+
+ament_target_dependencies(radar_preprocessor_wrapper
+  rclcpp
+  std_msgs
+  radar_msgs
+)
 
 install(TARGETS
   radar_preprocessor_wrapper

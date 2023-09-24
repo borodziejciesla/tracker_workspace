@@ -1,0 +1,3 @@
+[submodule "src/radar_preprocessor/include/radar_perception"]
+	path = src/radar_preprocessor/include/radar_perception
+	url = git@github.com:borodziejciesla/radar_perception.git
