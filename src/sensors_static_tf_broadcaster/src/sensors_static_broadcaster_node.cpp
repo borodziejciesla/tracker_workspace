@@ -46,7 +46,7 @@ namespace tf_broadcaster {
 
         declare_parameter("radars.radar_rl.id", 3);
         declare_parameter("radars.radar_rl.x", 0.0f);
-        declare_parameter("radars.radar_rl.y", 0.0f);
+        declare_parameter("radars.radar_rl.y", 0.9f);
         declare_parameter("radars.radar_rl.z", 0.2f);
         declare_parameter("radars.radar_rl.roll", 0.0f);
         declare_parameter("radars.radar_rl.pitch", 0.0f);
@@ -98,9 +98,9 @@ namespace tf_broadcaster {
         get_parameter("radars." + radar_name + ".z", t.transform.translation.z);
 
         float roll, pitch, yaw;
-        get_parameter("radars." + radar_name + ".x", roll);
-        get_parameter("radars." + radar_name + ".y", pitch);
-        get_parameter("radars." + radar_name + ".z", yaw);
+        get_parameter("radars." + radar_name + ".roll", roll);
+        get_parameter("radars." + radar_name + ".pitch", pitch);
+        get_parameter("radars." + radar_name + ".yaw", yaw);
 
         tf2::Quaternion q;
         q.setRPY(roll, pitch, yaw);

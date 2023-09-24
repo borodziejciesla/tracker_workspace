@@ -74,8 +74,6 @@ namespace visualization {
   void RadarVisualizer::RadarMessageCallbackFront(const radar_msgs::msg::RadarScan & radar_scan_msg) {
     const auto marker_array = RadarMessageCallback(radar_scan_msg, "/radar_front");
     detections_marker_publishers_["/radar_scan_front"]->publish(marker_array);
-
-    RCLCPP_INFO(this->get_logger(), "Visualizr Front");
   }
 
   void RadarVisualizer::RadarMessageCallbackRear(const radar_msgs::msg::RadarScan & radar_scan_msg) {
