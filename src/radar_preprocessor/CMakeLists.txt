@@ -16,6 +16,7 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
 find_package(radar_msgs REQUIRED)
+find_package(radar_processor_msgs REQUIRED)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -56,6 +57,7 @@ ament_target_dependencies(radar_preprocessor_wrapper
   rclcpp
   std_msgs
   radar_msgs
+  radar_processor_msgs
 )
 
 install(TARGETS

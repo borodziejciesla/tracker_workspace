@@ -8,6 +8,7 @@
 #include "radar_processor.hpp"
 
 #include "radar_msgs/msg/radar_scan.hpp"
+#include "radar_processor_msgs/msg/scan_objects.hpp"
 
 using std::placeholders::_1;
 
@@ -20,6 +21,8 @@ namespace radar_preprocessor {
       void RadarMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg);
 
       rclcpp::Subscription<radar_msgs::msg::RadarScan>::SharedPtr radar_subscriber_;
+      rclcpp::Publisher<radar_processor_msgs::msg::ScanObjects>::SharedPtr objects_publisher_;
+
       std::unique_ptr<measurements::radar::RadarProcessor> radar_processor_;
   };
 } //  namespace radar_preprocessor
