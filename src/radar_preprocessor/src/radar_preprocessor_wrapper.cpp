@@ -94,6 +94,37 @@ namespace radar_preprocessor {
     const auto velocity = radar_processor_->GetRadarVelocity();
 
     if (output.has_value()) {
+      const auto objects = std::get<0>(output.value());
+
+      scan_objects_.radar_id = 0u;
+
+      // Copy detections
+      scan_objects_.detections.clear();
+      std::copy(radar_scan_msg.detections.begin(), radar_scan_msg.detections.end(), std::back_inserter(scan_objects_.detections));
+
+      // Convert objects
+      scan_objects_.objects.clear();
+      std::transform(objects.begin(), objects.end(),
+        std::back_inserter(scan_objects_.objects),
+        [] (const auto & object) {
+          radar_processor_msgs::msg::MovingObject object_msg;
+
+          object_msg.pose.x = object.object_center.x;
+          object_msg.pose.y = object.object_center.y;
+          object_msg.pose.orientation = object.object_center.orientation;
+
+          object_msg.velocity.vx = object.object_velocity.vx;
+          object_msg.velocity.vy = object.object_velocity.vy;
+          
+          object_msg.size.length = object.object_size.length;
+          object_msg.size.width = object.object_size.width;
+
+          return object_msg;
+        }
+      );
+
+      objects_publisher_->publish(scan_objects_);
+
       RCLCPP_INFO(this->get_logger(), "Radar Preprocessor=========================");
     } else {
       RCLCPP_INFO(this->get_logger(), "Radar Preprocessor=========================++++++++++++++++");

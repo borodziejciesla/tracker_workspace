@@ -24,6 +24,8 @@ namespace radar_preprocessor {
       rclcpp::Publisher<radar_processor_msgs::msg::ScanObjects>::SharedPtr objects_publisher_;
 
       std::unique_ptr<measurements::radar::RadarProcessor> radar_processor_;
+
+      radar_processor_msgs::msg::ScanObjects scan_objects_;
   };
 } //  namespace radar_preprocessor
 

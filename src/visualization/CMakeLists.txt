@@ -17,6 +17,7 @@ find_package(std_msgs REQUIRED)
 
 find_package(tracker_msgs REQUIRED)
 find_package(radar_msgs REQUIRED)
+find_package(radar_processor_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
 # uncomment the following section in order to fill in
@@ -27,6 +28,22 @@ add_executable(tracker_visualization
   src/tracker_visualization.cpp
 )
 ament_target_dependencies(tracker_visualization rclcpp std_msgs tracker_msgs)
+
+
+add_executable(radar_preprocessor_visualization
+  src/radar_preprocessor_visualization_node.cpp
+  src/radar_preprocessor_visualizer.cpp
+)
+target_include_directories(radar_preprocessor_visualization
+  PRIVATE
+    include
+)
+ament_target_dependencies(radar_preprocessor_visualization
+  rclcpp
+  std_msgs
+  radar_processor_msgs
+  visualization_msgs
+)
 
 
 
