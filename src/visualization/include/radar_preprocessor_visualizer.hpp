@@ -15,16 +15,16 @@ namespace visualization {
       RadarPreprocessorVisualizer(void);
 
     private:
-      visualization_msgs::msg::MarkerArray RadarPreprocessorMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg, const std::string & frame_id);
-      void RadarMessageCallbackFront(const radar_msgs::msg::RadarScan & radar_scan_msg);
-      void RadarMessageCallbackRear(const radar_msgs::msg::RadarScan & radar_scan_msg);
-      void RadarMessageCallbackFrontLeft(const radar_msgs::msg::RadarScan & radar_scan_msg);
-      void RadarMessageCallbackFrontRight(const radar_msgs::msg::RadarScan & radar_scan_msg);
-      void RadarMessageCallbackRearLeft(const radar_msgs::msg::RadarScan & radar_scan_msg);
-      void RadarMessageCallbackRearRight(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      // visualization_msgs::msg::MarkerArray RadarPreprocessorMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg, const std::string & frame_id);
+      // void RadarMessageCallbackFront(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      // void RadarMessageCallbackRear(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      // void RadarMessageCallbackFrontLeft(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      // void RadarMessageCallbackFrontRight(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      // void RadarMessageCallbackRearLeft(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      // void RadarMessageCallbackRearRight(const radar_msgs::msg::RadarScan & radar_scan_msg);
 
-      std::map<std::string, rclcpp::Subscription<radar_msgs::msg::RadarScan>::SharedPtr> radar_subscribers_;
-      std::map<std::string, rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr> detections_marker_publishers_;
+      // std::map<std::string, rclcpp::Subscription<radar_msgs::msg::RadarScan>::SharedPtr> radar_subscribers_;
+      // std::map<std::string, rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr> detections_marker_publishers_;
   };
 } //  namespace visualization
 
