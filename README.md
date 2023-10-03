@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/borodziejciesla/tracker_workspace/badge)](https://www.codefactor.io/repository/github/borodziejciesla/tracker_workspace)
+
 # Tracker Workspace
 Tracker workspace provides nodes and messages for multi target tracking based on automotive tracker detections.
 ## Messages
