@@ -38,6 +38,12 @@ def generate_launch_description():
         Node(
             package='visualization',
             namespace='visualization',
+            executable='radar_preprocessor_visualization',
+            name='radar_preprocessor_visualization'
+        ),
+        Node(
+            package='visualization',
+            namespace='visualization',
             executable='tracker_visualization',
             name='tracker_visualization'
         ),
