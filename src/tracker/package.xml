@@ -16,6 +16,7 @@
   <depend>std_msgs</depend>
   <depend>tracker_msgs</depend>
   <depend>radar_msgs</depend>
+  <depend>radar_processor_msgs</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
