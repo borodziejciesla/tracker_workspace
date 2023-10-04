@@ -18,6 +18,7 @@ find_package(std_msgs REQUIRED)
 find_package(tracker_msgs REQUIRED)
 find_package(radar_msgs REQUIRED)
 find_package(radar_processor_msgs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
 # uncomment the following section in order to fill in
@@ -43,6 +44,7 @@ ament_target_dependencies(radar_preprocessor_visualization
   std_msgs
   radar_processor_msgs
   visualization_msgs
+  tf2_geometry_msgs
 )
 
 

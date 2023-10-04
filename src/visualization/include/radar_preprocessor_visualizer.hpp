@@ -15,9 +15,11 @@ namespace visualization {
 
     private:
       void RadarPreprocessorMessageCallback(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg);
+      visualization_msgs::msg::Marker ConvertObjectToMarker(const radar_processor_msgs::msg::MovingObject & radar_object, const int32_t id);
 
       rclcpp::Subscription<radar_processor_msgs::msg::ScanObjects>::SharedPtr radar_processor_subscribers_;
       rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr objects_marker_publishers_;
+      visualization_msgs::msg::MarkerArray objects_array_;
   };
 } //  namespace visualization
 
