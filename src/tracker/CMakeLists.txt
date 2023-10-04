@@ -22,6 +22,8 @@ find_package(radar_processor_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+add_subdirectory(include/gm_phd)
+
 add_executable(tracker_wrapper
   src/tracker_wrapper.cpp
   src/tracker_wrapper_node.cpp
