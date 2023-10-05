@@ -67,6 +67,7 @@ ament_target_dependencies(radar_visualization
 install(TARGETS
   radar_visualization
   tracker_visualization
+  radar_preprocessor_visualization
   DESTINATION lib/${PROJECT_NAME})
 
 
