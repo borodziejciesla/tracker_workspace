@@ -34,6 +34,10 @@ target_include_directories(tracker_wrapper
     include
 )
 
+target_link_libraries(tracker_wrapper
+  gm-phd
+)
+
 ament_target_dependencies(tracker_wrapper
   rclcpp
   std_msgs
