@@ -15,7 +15,7 @@ namespace tracker_wrapper {
   TrackerWrapper::TrackerWrapper(void) : Node("tracker_wrapper") {
     // Initialize subscriber
     radar_subscriber_ = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
-      "/radar_preprocessor/radar_scan", 10, std::bind(&TrackerWrapper::RadarPreprocessorSubscriberCallback, this, _1));
+      "/radar/objects", 10, std::bind(&TrackerWrapper::RadarPreprocessorSubscriberCallback, this, _1));
 
     // Initialize publisher
     tracker_publisher_ = this->create_publisher<tracker_msgs::msg::TrackerScan>("tracker_scan", 10);
