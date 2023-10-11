@@ -23,10 +23,11 @@ namespace visualization {
   void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallback(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
     objects_array_.markers.clear();
     
+    int32_t id = 0;
     std::transform(radar_processor_scan_msg.objects.begin(), radar_processor_scan_msg.objects.end(),
       std::back_inserter(objects_array_.markers),
-      [this](const radar_processor_msgs::msg::MovingObject & radar_object) {
-        return ConvertObjectToMarker(radar_object, 0);
+      [&id,this](const radar_processor_msgs::msg::MovingObject & radar_object) {
+        return ConvertObjectToMarker(radar_object, id++);
       }
     );
 
@@ -36,7 +37,7 @@ namespace visualization {
   visualization_msgs::msg::Marker RadarPreprocessorVisualizer::ConvertObjectToMarker(const radar_processor_msgs::msg::MovingObject & radar_object, const int32_t id) {
     visualization_msgs::msg::Marker marker;
 
-    marker.header.frame_id = "frame_id";
+    marker.header.frame_id = "map";
     marker.header.stamp = this->get_clock()->now();
     marker.ns = "radar_object_vis";
     marker.id = id;

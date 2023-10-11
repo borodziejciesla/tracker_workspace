@@ -68,8 +68,8 @@ namespace tracker_wrapper {
       [](const mot::GmPhdCvPose::Object & object) {
         tracker_msgs::msg::Object object_msg;
 
-        object_msg.position.x = object.state(0u);
-        object_msg.position.y = object.state(1u);
+        object_msg.position.x = object.value(0u);
+        object_msg.position.y = object.value(1u);
 
         return object_msg;
       }
