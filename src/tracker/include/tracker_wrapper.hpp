@@ -19,6 +19,7 @@ namespace tracker_wrapper {
     private:
       void RadarPreprocessorSubscriberCallback(const radar_processor_msgs::msg::ScanObjects & radar_preprocessor_msg);
       std::vector<mot::GmPhdCvPose::Measurement> ConvertPreprocessorScanToPhdInput(const radar_processor_msgs::msg::ScanObjects & radar_preprocessor_msg) const;
+      tracker_msgs::msg::TrackerScan ConvertPhdOutputToMessage(const std::vector<mot::GmPhdCvPose::Object> & objects) const;
 
       rclcpp::Subscription<radar_processor_msgs::msg::ScanObjects>::SharedPtr radar_subscriber_;
       rclcpp::Publisher<tracker_msgs::msg::TrackerScan>::SharedPtr tracker_publisher_;

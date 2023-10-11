@@ -20,7 +20,6 @@ namespace tracker_wrapper {
     // Initialize publisher
     tracker_publisher_ = this->create_publisher<tracker_msgs::msg::TrackerScan>("tracker_scan", 10);
 
-
     // Initialize tracker
     gm_phd_tracker_ = std::make_unique<mot::GmPhdCvPose>(calibrations_);
   }
@@ -31,6 +30,9 @@ namespace tracker_wrapper {
     // Run filter
     gm_phd_tracker_->Run(0.0, measurements);
     const auto objects = gm_phd_tracker_->GetObjects();
+    // Publish
+    tracker_scan_ = ConvertPhdOutputToMessage(objects);
+    tracker_publisher_->publish(tracker_scan_);
   }
 
   std::vector<mot::GmPhdCvPose::Measurement> TrackerWrapper::ConvertPreprocessorScanToPhdInput(const radar_processor_msgs::msg::ScanObjects & radar_preprocessor_msg) const {
@@ -52,5 +54,27 @@ namespace tracker_wrapper {
       }
     );
     return measurements;
+  }
+
+  tracker_msgs::msg::TrackerScan TrackerWrapper::ConvertPhdOutputToMessage(const std::vector<mot::GmPhdCvPose::Object> & objects) const {
+    tracker_msgs::msg::TrackerScan tracker_scan;
+
+    tracker_scan.timestamp = 0.0;
+
+    tracker_scan.objects_number = objects.size();
+
+    std::transform(objects.begin(), objects.end(),
+      std::back_inserter(tracker_scan.objects),
+      [](const mot::GmPhdCvPose::Object & object) {
+        tracker_msgs::msg::Object object_msg;
+
+        object_msg.position.x = object.state(0u);
+        object_msg.position.y = object.state(1u);
+
+        return object_msg;
+      }
+    );
+
+    return tracker_scan;
   }
 } //  tracker_wrapper
