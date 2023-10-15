@@ -106,12 +106,18 @@ namespace radar_preprocessor {
       scan_objects_.objects.clear();
       std::transform(objects.begin(), objects.end(),
         std::back_inserter(scan_objects_.objects),
-        [] (const auto & object) {
+        [radar_scan] (const auto & object) {
           radar_processor_msgs::msg::MovingObject object_msg;
 
-          object_msg.pose.x = object.object_center.x;
-          object_msg.pose.y = object.object_center.y;
-          object_msg.pose.orientation = object.object_center.orientation;
+          const auto cos_yaw = std::cos(-radar_scan.sensor_origin.yaw);
+          const auto sin_yaw = std::sin(-radar_scan.sensor_origin.yaw);
+
+          const auto rotated_x = object.object_center.x * cos_yaw - object.object_center.y * sin_yaw;
+          const auto rotated_y = object.object_center.x * sin_yaw + object.object_center.y * cos_yaw;
+
+          object_msg.pose.x = rotated_x + radar_scan.sensor_origin.x;
+          object_msg.pose.y = rotated_y + radar_scan.sensor_origin.y;
+          object_msg.pose.orientation = object.object_center.orientation + radar_scan.sensor_origin.yaw;
 
           object_msg.velocity.vx = object.object_velocity.vx;
           object_msg.velocity.vy = object.object_velocity.vy;
