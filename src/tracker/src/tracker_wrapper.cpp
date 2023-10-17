@@ -21,6 +21,12 @@ namespace tracker_wrapper {
     tracker_publisher_ = this->create_publisher<tracker_msgs::msg::TrackerScan>("tracker_scan", 10);
 
     // Initialize tracker
+    calibrations_.observation_matrix = Eigen::Matrix<double, 2u, 4u>::Zero();
+    calibrations_.observation_matrix(0u, 0u) = 1.0;
+    calibrations_.observation_matrix(1u, 1u) = 1.0;
+
+    calibrations_.measurement_covariance = 0.2 * Eigen::Matrix<double, 2u, 2u>::Identity();
+
     gm_phd_tracker_ = std::make_unique<mot::GmPhdCvPose>(calibrations_);
   }
 
@@ -39,11 +45,14 @@ namespace tracker_wrapper {
     std::vector<mot::GmPhdCvPose::Measurement> measurements;
     std::transform(radar_preprocessor_msg.objects.begin(), radar_preprocessor_msg.objects.end(),
       std::back_inserter(measurements),
-      [](const radar_processor_msgs::msg::MovingObject & preprocessor_object) {
+      [this](const radar_processor_msgs::msg::MovingObject & preprocessor_object) {
         mot::GmPhdCvPose::Measurement measurement;
 
         measurement.value(0) = preprocessor_object.pose.x;
         measurement.value(1) = preprocessor_object.pose.y;
+
+        RCLCPP_INFO(this->get_logger(), "****************Measurement: %f", measurement.value(0));
+        RCLCPP_INFO(this->get_logger(), "****************Measurement: %f", measurement.value(1));
 
         measurement.covariance(0, 0) = preprocessor_object.pose.cov_x;
         measurement.covariance(0, 1) = preprocessor_object.pose.cov_xy;
