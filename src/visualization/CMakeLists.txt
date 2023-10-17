@@ -26,9 +26,18 @@ find_package(visualization_msgs REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 add_executable(tracker_visualization
-  src/tracker_visualization.cpp
+  src/tracker_visualizer.cpp
+  src/tracker_visualizer_node.cpp
 )
-ament_target_dependencies(tracker_visualization rclcpp std_msgs tracker_msgs)
+target_include_directories(tracker_visualization
+  PRIVATE
+    include
+)
+ament_target_dependencies(tracker_visualization
+  rclcpp
+  std_msgs
+  visualization_msgs
+  tracker_msgs)
 
 
 add_executable(radar_preprocessor_visualization

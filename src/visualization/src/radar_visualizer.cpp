@@ -11,7 +11,7 @@ using std::placeholders::_1;
 
 namespace visualization {
   RadarVisualizer::RadarVisualizer(void) : Node("radar_visualizer") {
-    // Sybscriber
+    // Subscriber
     radar_subscribers_["/radar_scan_front"] = this->create_subscription<radar_msgs::msg::RadarScan>(
       "/radar_scan_front", 10, std::bind(&RadarVisualizer::RadarMessageCallbackFront, this, _1));
     radar_subscribers_["/radar_scan_fl"] = this->create_subscription<radar_msgs::msg::RadarScan>(
