@@ -37,6 +37,7 @@ ament_target_dependencies(tracker_visualization
   rclcpp
   std_msgs
   visualization_msgs
+  tf2_geometry_msgs
   tracker_msgs)
 
 

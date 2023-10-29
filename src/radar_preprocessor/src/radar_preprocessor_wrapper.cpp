@@ -36,9 +36,6 @@ namespace radar_preprocessor {
   }
 
   void RadarPreprocessorWrapper::RadarMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg) {
-    std::ignore = radar_scan_msg;
-    RCLCPP_INFO(this->get_logger(), "Radar Preprocessor");
-
     measurements::radar::RadarScan radar_scan;
 
     radar_scan.sensor_origin.x = radar_scan_msg.sensor_origin.x;
@@ -91,7 +88,6 @@ namespace radar_preprocessor {
     );
 
     const auto output = radar_processor_->ProcessScan(radar_scan);
-    const auto velocity = radar_processor_->GetRadarVelocity();
 
     if (output.has_value()) {
       const auto objects = std::get<0>(output.value());
@@ -130,13 +126,6 @@ namespace radar_preprocessor {
       );
 
       objects_publisher_->publish(scan_objects_);
-
-      RCLCPP_INFO(this->get_logger(), "Radar Preprocessor=========================");
-    } else {
-      RCLCPP_INFO(this->get_logger(), "Radar Preprocessor=========================++++++++++++++++");
     }
-
-    RCLCPP_INFO(this->get_logger(), "vx = %f, vy = %f", velocity.velocity.at(0), velocity.velocity.at(1));
-    RCLCPP_INFO(this->get_logger(), "cov_vx = %f, cov_vy = %f", velocity.covariance.covariance_diagonal.at(0), velocity.covariance.covariance_diagonal.at(1));
   }
 } //  radar_preprocessor

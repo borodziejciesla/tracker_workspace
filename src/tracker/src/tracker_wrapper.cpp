@@ -36,6 +36,7 @@ namespace tracker_wrapper {
     // Run filter
     gm_phd_tracker_->Run(0.0, measurements);
     const auto objects = gm_phd_tracker_->GetObjects();
+
     // Publish
     tracker_scan_ = ConvertPhdOutputToMessage(objects);
     tracker_publisher_->publish(tracker_scan_);
@@ -50,10 +51,7 @@ namespace tracker_wrapper {
 
         measurement.value(0) = preprocessor_object.pose.x;
         measurement.value(1) = preprocessor_object.pose.y;
-
-        RCLCPP_INFO(this->get_logger(), "****************Measurement: %f", measurement.value(0));
-        RCLCPP_INFO(this->get_logger(), "****************Measurement: %f", measurement.value(1));
-
+        
         measurement.covariance(0, 0) = preprocessor_object.pose.cov_x;
         measurement.covariance(0, 1) = preprocessor_object.pose.cov_xy;
         measurement.covariance(1, 0) = preprocessor_object.pose.cov_xy;
