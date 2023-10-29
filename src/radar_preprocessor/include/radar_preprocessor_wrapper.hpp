@@ -1,7 +1,9 @@
 #ifndef RADAR_PREPROCESSOR_INCLUDE_RADAR_PREPROCESSOR_WRAPPER_HPP_
 #define RADAR_PREPROCESSOR_INCLUDE_RADAR_PREPROCESSOR_WRAPPER_HPP_
 
+#include <map>
 #include <memory>
+#include <string>
 
 #include "rclcpp/rclcpp.hpp"
 
@@ -20,7 +22,7 @@ namespace radar_preprocessor {
     private:
       void RadarMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg);
 
-      rclcpp::Subscription<radar_msgs::msg::RadarScan>::SharedPtr radar_subscriber_;
+      std::map<std::string, rclcpp::Subscription<radar_msgs::msg::RadarScan>::SharedPtr> radar_subscribers_;
       rclcpp::Publisher<radar_processor_msgs::msg::ScanObjects>::SharedPtr objects_publisher_;
 
       std::unique_ptr<measurements::radar::RadarProcessor> radar_processor_;

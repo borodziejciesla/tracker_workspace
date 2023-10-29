@@ -28,8 +28,18 @@ namespace radar_preprocessor {
     radar_processor_ = std::make_unique<measurements::radar::RadarProcessor>(radar_processor_calibrations);
 
     // Prepare subscriber
-    radar_subscriber_ = this->create_subscription<radar_msgs::msg::RadarScan>(
+    radar_subscribers_["radar_front"] = this->create_subscription<radar_msgs::msg::RadarScan>(
       "/radar_scan_front", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+    radar_subscribers_["radar_fl"] = this->create_subscription<radar_msgs::msg::RadarScan>(
+      "/radar_scan_fl", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+    radar_subscribers_["radar_fr"] = this->create_subscription<radar_msgs::msg::RadarScan>(
+      "/radar_scan_fr", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+    radar_subscribers_["radar_rl"] = this->create_subscription<radar_msgs::msg::RadarScan>(
+      "/radar_scan_rl", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+    radar_subscribers_["radar_rr"] = this->create_subscription<radar_msgs::msg::RadarScan>(
+      "/radar_scan_rr", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+    radar_subscribers_["radar_rear"] = this->create_subscription<radar_msgs::msg::RadarScan>(
+      "/radar_scan_rear", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
 
     // Prepare publisher
     objects_publisher_ = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar/objects", 10);
