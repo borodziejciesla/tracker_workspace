@@ -29,23 +29,28 @@ namespace radar_preprocessor {
 
     // Prepare subscriber
     radar_subscribers_["radar_front"] = this->create_subscription<radar_msgs::msg::RadarScan>(
-      "/radar_scan_front", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+      "/radar_scan_front", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallbackFront, this, _1));
     radar_subscribers_["radar_fl"] = this->create_subscription<radar_msgs::msg::RadarScan>(
-      "/radar_scan_fl", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+      "/radar_scan_fl", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallbackFrontLeft, this, _1));
     radar_subscribers_["radar_fr"] = this->create_subscription<radar_msgs::msg::RadarScan>(
-      "/radar_scan_fr", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+      "/radar_scan_fr", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallbackFrontRight, this, _1));
     radar_subscribers_["radar_rl"] = this->create_subscription<radar_msgs::msg::RadarScan>(
-      "/radar_scan_rl", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+      "/radar_scan_rl", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallbackRearLeft, this, _1));
     radar_subscribers_["radar_rr"] = this->create_subscription<radar_msgs::msg::RadarScan>(
-      "/radar_scan_rr", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+      "/radar_scan_rr", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallbackRearRight, this, _1));
     radar_subscribers_["radar_rear"] = this->create_subscription<radar_msgs::msg::RadarScan>(
-      "/radar_scan_rear", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallback, this, _1));
+      "/radar_scan_rear", 10, std::bind(&RadarPreprocessorWrapper::RadarMessageCallbackRear, this, _1));
 
     // Prepare publisher
-    objects_publisher_ = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar/objects", 10);
+    objects_publishers_["radar_front"] = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar_front/objects", 10);
+    objects_publishers_["radar_fl"] = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar_fl/objects", 10);
+    objects_publishers_["radar_fr"] = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar_fr/objects", 10);
+    objects_publishers_["radar_rl"] = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar_rl/objects", 10);
+    objects_publishers_["radar_rr"] = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar_rr/objects", 10);
+    objects_publishers_["radar_rear"] = this->create_publisher<radar_processor_msgs::msg::ScanObjects>("/radar_rear/objects", 10);
   }
 
-  void RadarPreprocessorWrapper::RadarMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg) {
+  void RadarPreprocessorWrapper::RadarMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg, const std::string & radar_name) {
     measurements::radar::RadarScan radar_scan;
 
     radar_scan.sensor_origin.x = radar_scan_msg.sensor_origin.x;
@@ -135,7 +140,32 @@ namespace radar_preprocessor {
         }
       );
 
-      objects_publisher_->publish(scan_objects_);
+      objects_publishers_[radar_name]->publish(scan_objects_);
     }
   }
+
+  void RadarPreprocessorWrapper::RadarMessageCallbackFront(const radar_msgs::msg::RadarScan & radar_scan_msg) {
+    RadarMessageCallback(radar_scan_msg, std::string("radar_front"));
+  }
+
+  void RadarPreprocessorWrapper::RadarMessageCallbackFrontLeft(const radar_msgs::msg::RadarScan & radar_scan_msg) {
+    RadarMessageCallback(radar_scan_msg, std::string("radar_fl"));
+  }
+  
+  void RadarPreprocessorWrapper::RadarMessageCallbackFrontRight(const radar_msgs::msg::RadarScan & radar_scan_msg) {
+    RadarMessageCallback(radar_scan_msg, std::string("radar_fr"));
+  }
+  
+  void RadarPreprocessorWrapper::RadarMessageCallbackRearLeft(const radar_msgs::msg::RadarScan & radar_scan_msg) {
+    RadarMessageCallback(radar_scan_msg, std::string("radar_rl"));
+  }
+  
+  void RadarPreprocessorWrapper::RadarMessageCallbackRearRight(const radar_msgs::msg::RadarScan & radar_scan_msg) {
+    RadarMessageCallback(radar_scan_msg, std::string("radar_rr"));
+  }
+  
+  void RadarPreprocessorWrapper::RadarMessageCallbackRear(const radar_msgs::msg::RadarScan & radar_scan_msg) {
+    RadarMessageCallback(radar_scan_msg, std::string("radar_rear"));
+  }
+  
 } //  radar_preprocessor

@@ -20,10 +20,15 @@ namespace radar_preprocessor {
       RadarPreprocessorWrapper(void);
 
     private:
-      void RadarMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg);
-
+      void RadarMessageCallback(const radar_msgs::msg::RadarScan & radar_scan_msg, const std::string & radar_name);
+      void RadarMessageCallbackFront(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      void RadarMessageCallbackFrontLeft(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      void RadarMessageCallbackFrontRight(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      void RadarMessageCallbackRearLeft(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      void RadarMessageCallbackRearRight(const radar_msgs::msg::RadarScan & radar_scan_msg);
+      void RadarMessageCallbackRear(const radar_msgs::msg::RadarScan & radar_scan_msg);
       std::map<std::string, rclcpp::Subscription<radar_msgs::msg::RadarScan>::SharedPtr> radar_subscribers_;
-      rclcpp::Publisher<radar_processor_msgs::msg::ScanObjects>::SharedPtr objects_publisher_;
+      std::map<std::string, rclcpp::Publisher<radar_processor_msgs::msg::ScanObjects>::SharedPtr> objects_publishers_;
 
       std::unique_ptr<measurements::radar::RadarProcessor> radar_processor_;
 

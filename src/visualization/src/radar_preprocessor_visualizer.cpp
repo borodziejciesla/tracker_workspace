@@ -14,13 +14,28 @@ using std::placeholders::_1;
 namespace visualization {
   RadarPreprocessorVisualizer::RadarPreprocessorVisualizer(void) : Node("radar_preprocessor_visualizer") {
     // Subscriber
-    radar_processor_subscribers_ = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
-      "/radar/objects", 10, std::bind(&RadarPreprocessorVisualizer::RadarPreprocessorMessageCallback, this, _1));
+    radar_processor_subscribers_["radar_front"] = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
+      "/radar_front/objects", 10, std::bind(&RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackFront, this, _1));
+    radar_processor_subscribers_["radar_fl"] = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
+      "/radar_fl/objects", 10, std::bind(&RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackFrontLeft, this, _1));
+    radar_processor_subscribers_["radar_fr"] = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
+      "/radar_fr/objects", 10, std::bind(&RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackFrontRight, this, _1));
+    radar_processor_subscribers_["radar_rl"] = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
+      "/radar_rl/objects", 10, std::bind(&RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackRearLeft, this, _1));
+    radar_processor_subscribers_["radar_rr"] = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
+      "/radar_rr/objects", 10, std::bind(&RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackRearRight, this, _1));
+    radar_processor_subscribers_["radar_rear"] = this->create_subscription<radar_processor_msgs::msg::ScanObjects>(
+      "/radar_rear/objects", 10, std::bind(&RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackRear, this, _1));
     // Publisher
-    objects_marker_publishers_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("/vis/radar_objects", 10);
+    objects_marker_publishers_["radar_front"] = this->create_publisher<visualization_msgs::msg::MarkerArray>("/vis/radar_front/objects", 10);
+    objects_marker_publishers_["radar_fl"] = this->create_publisher<visualization_msgs::msg::MarkerArray>("/vis/radar_fl/objects", 10);
+    objects_marker_publishers_["radar_fr"] = this->create_publisher<visualization_msgs::msg::MarkerArray>("/vis/radar_fr/objects", 10);
+    objects_marker_publishers_["radar_rl"] = this->create_publisher<visualization_msgs::msg::MarkerArray>("/vis/radar_rl/objects", 10);
+    objects_marker_publishers_["radar_rr"] = this->create_publisher<visualization_msgs::msg::MarkerArray>("/vis/radar_rr/objects", 10);
+    objects_marker_publishers_["radar_rear"] = this->create_publisher<visualization_msgs::msg::MarkerArray>("/vis/radar_rear/objects", 10);
   }
 
-  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallback(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
+  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallback(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg, const std::string & radar_name) {
     objects_array_.markers.clear();
     
     int32_t id = 0;
@@ -31,7 +46,31 @@ namespace visualization {
       }
     );
 
-    objects_marker_publishers_->publish(objects_array_);
+    objects_marker_publishers_[radar_name]->publish(objects_array_);
+  }
+
+  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackFront(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
+    RadarPreprocessorMessageCallback(radar_processor_scan_msg, std::string("radar_front"));
+  }
+
+  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackFrontLeft(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
+    RadarPreprocessorMessageCallback(radar_processor_scan_msg, std::string("radar_fl"));
+  }
+
+  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackFrontRight(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
+    RadarPreprocessorMessageCallback(radar_processor_scan_msg, std::string("radar_fr"));
+  }
+
+  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackRearLeft(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
+    RadarPreprocessorMessageCallback(radar_processor_scan_msg, std::string("radar_rl"));
+  }
+
+  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackRearRight(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
+    RadarPreprocessorMessageCallback(radar_processor_scan_msg, std::string("radar_rr"));
+  }
+
+  void RadarPreprocessorVisualizer::RadarPreprocessorMessageCallbackRear(const radar_processor_msgs::msg::ScanObjects & radar_processor_scan_msg) {
+    RadarPreprocessorMessageCallback(radar_processor_scan_msg, std::string("radar_rear"));
   }
 
   visualization_msgs::msg::Marker RadarPreprocessorVisualizer::ConvertObjectToMarker(const radar_processor_msgs::msg::MovingObject & radar_object, const int32_t id) {
