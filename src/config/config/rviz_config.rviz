@@ -6,8 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /MarkerArray1/Topic1
         - /Radars1
+        - /RadarProcessor1/Front1/Status1
       Splitter Ratio: 0.5
     Tree Height: 549
   - Class: rviz_common/Selection
@@ -89,23 +89,11 @@ Visualization Manager:
             {}
       Update Interval: 0
       Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: MarkerArray
-      Namespaces:
-        radar_object_vis: true
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /vis/radar_objects
-      Value: true
     - Class: rviz_common/Group
       Displays:
         - Class: rviz_default_plugins/MarkerArray
           Enabled: true
-          Name: MarkerArray
+          Name: Front
           Namespaces:
             radar_vis: true
           Topic:
@@ -117,7 +105,7 @@ Visualization Manager:
           Value: true
         - Class: rviz_default_plugins/MarkerArray
           Enabled: true
-          Name: MarkerArray
+          Name: FR
           Namespaces:
             radar_vis: true
           Topic:
@@ -129,7 +117,7 @@ Visualization Manager:
           Value: true
         - Class: rviz_default_plugins/MarkerArray
           Enabled: true
-          Name: MarkerArray
+          Name: FL
           Namespaces:
             radar_vis: true
           Topic:
@@ -141,7 +129,7 @@ Visualization Manager:
           Value: true
         - Class: rviz_default_plugins/MarkerArray
           Enabled: true
-          Name: MarkerArray
+          Name: Rear
           Namespaces:
             radar_vis: true
           Topic:
@@ -153,7 +141,7 @@ Visualization Manager:
           Value: true
         - Class: rviz_default_plugins/MarkerArray
           Enabled: true
-          Name: MarkerArray
+          Name: RL
           Namespaces:
             radar_vis: true
           Topic:
@@ -165,7 +153,7 @@ Visualization Manager:
           Value: true
         - Class: rviz_default_plugins/MarkerArray
           Enabled: true
-          Name: MarkerArray
+          Name: RR
           Namespaces:
             radar_vis: true
           Topic:
@@ -177,6 +165,94 @@ Visualization Manager:
           Value: true
       Enabled: true
       Name: Radars
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /vis/tracker
+      Value: true
+    - Class: rviz_common/Group
+      Displays:
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: true
+          Name: FL
+          Namespaces:
+            radar_object_vis: true
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /vis/radar_fl/objects
+          Value: true
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: true
+          Name: FR
+          Namespaces:
+            {}
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /vis/radar_fr/objects
+          Value: true
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: true
+          Name: RL
+          Namespaces:
+            {}
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /vis/radar_rl/objects
+          Value: true
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: true
+          Name: RR
+          Namespaces:
+            {}
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /vis/radar_rr/objects
+          Value: true
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: true
+          Name: Rear
+          Namespaces:
+            {}
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /vis/radar_rear/objects
+          Value: true
+        - Class: rviz_default_plugins/MarkerArray
+          Enabled: true
+          Name: Front
+          Namespaces:
+            radar_object_vis: true
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /vis/radar_front/objects
+          Value: true
+      Enabled: true
+      Name: RadarProcessor
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -223,7 +299,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 129.15354919433594
+      Distance: 358.1529846191406
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
